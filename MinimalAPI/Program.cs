@@ -5,6 +5,8 @@ builder.Services.AddEndpointsApiExplorer(); // Required for minimal APIs
 builder.Services.AddSwaggerGen();
 
 // Add services to the container.
+builder.Services.AddControllers();              //is an extension method that adds services required for using controllers in an ASP.NET Core application. It sets up the necessary infrastructure for handling HTTP requests and routing them to the appropriate controller actions.
+
 
 var app = builder.Build();
 
@@ -19,32 +21,38 @@ if (app.Environment.IsDevelopment()) // Optional: restrict to development
 
 app.UseHttpsRedirection();
 
-//Routing
-// Shirts
-app.MapGet("/shirts", () =>
-{
-    return "Reading all the shirts";
-});
+app.MapControllers();
 
-app.MapGet("/shirts/{id}", (int id) =>
-{
-    return $"Reading shirt with ID: {id}";
-});
 
-app.MapPost("/shirts", () =>
-{
-    return "Creating a new shirt";
-});
+//BELOW IS EXAMPLE CODE FOR ROUTING SHIRTS USING MINIMAL API - COMMENTED OUT FOR NOW
+//app.UseRouting();
+//app.UseAuthentication();
+//app.UseAuthorization();
 
-app.MapPut("/shirts/{id}", (int id) =>
-{
-    return $"Updating shirt with ID: {id}";
-});
+////Routing Shirts
+//app.MapGet("/shirts", () =>
+//{
+//    return "Reading all the shirts";
+//});
 
-app.MapDelete("/shirts/{id}", (int id) =>
-{
-    return $"Deleting shirt with ID: {id}";
-});
+//app.MapGet("/shirts/{id}", (int id) =>
+//{
+//    return $"Reading shirt with ID: {id}";
+//});
+
+//app.MapPost("/shirts", () =>
+//{
+//    return "Creating a new shirt";
+//});
+
+//app.MapPut("/shirts/{id}", (int id) =>
+//{
+//    return $"Updating shirt with ID: {id}";
+//});
+
+//app.MapDelete("/shirts/{id}", (int id) =>
+//{
+//    return $"Deleting shirt with ID: {id}";
+//});
 
 app.Run();
-
