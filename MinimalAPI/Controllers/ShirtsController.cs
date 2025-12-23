@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MinimalAPI.Filters;
 using MinimalAPI.Models;
 using MinimalAPI.Models.Repositories;
 using System.Drawing;
@@ -30,20 +31,11 @@ namespace MinimalAPI.Controllers
         //public string GetShirtsById(int id, [FromHeader(Name = "Color")] string color)       //[FromRoute],[FromHeader],[FromQuery], [FromBody], [FromForm]
 
         [HttpGet("{id}")]
+        [Shirt_ValidateShirtIdFilter]       //Model Validation using Action Filter Attribute to validate ShirtId before executing the action method.
         public IActionResult GetShirtsById(int id)                 //use IActionResult when you want to return different types of responses.
         {
-            if(id<=0)
-            {
-                return BadRequest("Invalid shirt ID");          //400 Bad Request
-            }
-
-            //var shirt = shirts.FirstOrDefault(x => x.ShirtId == id);
-            var shirt = ShirtRepository.GetShirtById(id);
-            if (shirt == null)
-            {
-                return NotFound();
-            }
-            return Ok(shirt);
+            
+            return Ok(ShirtRepository.GetShirtById(id));
         }
 
         [HttpPost]
