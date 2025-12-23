@@ -39,15 +39,9 @@ namespace MinimalAPI.Controllers
         }
 
         [HttpPost]
+        [Shirt_ValidateCreateShirtFilter]
         public IActionResult CreateShirt([FromBody]Shirt shirt)
         {
-            if (shirt == null)
-                return BadRequest();
-
-            var existingShirt = ShirtRepository.GetShirtByProperties(shirt.Brand, shirt.Gender, shirt.Color, shirt.Size);
-            if (existingShirt != null)
-                return BadRequest();
-
             ShirtRepository.AddShirt(shirt);
 
             //below is to return 201 Created response with location header pointing to the newly created resource
