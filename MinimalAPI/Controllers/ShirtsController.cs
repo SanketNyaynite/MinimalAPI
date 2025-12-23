@@ -23,7 +23,7 @@ namespace MinimalAPI.Controllers
         [HttpGet]
         public IActionResult GetShirts()
         {
-            return Ok("Reading all the shirts");
+            return Ok(ShirtRepository.GetShirts());
         }
 
         //What is Data Binding : To map data from an HTTP request to parameters in your action methods. 
