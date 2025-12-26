@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using MinimalAPI.Models;
 
-namespace MinimalAPI.Filters
+namespace MinimalAPI.Filters.ActionFilters
 {
     public class Shirt_ValidateUpdateShirtFilterAttribute : ActionFilterAttribute
     {

@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MinimalAPI.Filters;
+using MinimalAPI.Filters.ActionFilters;
+using MinimalAPI.Filters.ExceptionFilters;
 using MinimalAPI.Models;
 using MinimalAPI.Models.Repositories;
 using System.Drawing;
@@ -53,26 +55,22 @@ namespace MinimalAPI.Controllers
         [HttpPut("{id}")]
         [Shirt_ValidateShirtIdFilter]
         [Shirt_ValidateUpdateShirtFilter]
+        [Shirt_HandleUpdateExceptionsFilter]                //press ctrl +. to add using statement for the filter
         public IActionResult UpdateShirt(int id, Shirt shirt)
         {            
-            try
-            {
                 ShirtRepository.UpdateShirt(shirt);
-            }
-            catch
-            {
-                if (!ShirtRepository.ShirtExist(id))
-                    return NotFound();
-
-                throw;
-            }
+            
             return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public string DeleteShirt(int id)
+        [Shirt_ValidateShirtIdFilter]
+        public IActionResult DeleteShirt(int id)
         {
-            return $"Deleting shirt: {id}";
+            var shirt = ShirtRepository.GetShirtById(id);
+            ShirtRepository.DeleteShirt(id);
+
+            return Ok(shirt);
         }
     }
 }
