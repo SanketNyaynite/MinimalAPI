@@ -51,9 +51,22 @@ namespace MinimalAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateShirt(int id)
-        {
-            return Ok($"Updating shirt: {id}");
+        [Shirt_ValidateShirtIdFilter]
+        [Shirt_ValidateUpdateShirtFilter]
+        public IActionResult UpdateShirt(int id, Shirt shirt)
+        {            
+            try
+            {
+                ShirtRepository.UpdateShirt(shirt);
+            }
+            catch
+            {
+                if (!ShirtRepository.ShirtExist(id))
+                    return NotFound();
+
+                throw;
+            }
+            return NoContent();
         }
 
         [HttpDelete("{id}")]

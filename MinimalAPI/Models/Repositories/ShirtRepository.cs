@@ -31,6 +31,16 @@
             shirts.Add(shirt);
         }
 
+        public static void UpdateShirt(Shirt shirt)
+        {
+            var shirtToUpdate = shirts.First(x => x.ShirtId == shirt.ShirtId);
+            shirtToUpdate.Brand = shirt.Brand;
+            shirtToUpdate.Price = shirt.Price;
+            shirtToUpdate.Size = shirt.Size;
+            shirtToUpdate.Color = shirt.Color;
+            shirtToUpdate.Gender = shirt.Gender;
+        }
+
         public static Shirt? GetShirtByProperties(string? brand, string? gender, string? color, int? size)
         {
                        return shirts.FirstOrDefault(x =>
